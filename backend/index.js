@@ -1,16 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+const products = require("./products")
 
-const products = [
-  { id: 1, name: "Laptop", description: "High-performance laptop", price: 1200, image: "https://via.placeholder.com/150" },
-  { id: 2, name: "Phone", description: "Latest smartphone", price: 800, image: "https://via.placeholder.com/150" },
-  { id: 3, name: "Headphones", description: "Noise-canceling headphones", price: 200, image: "https://via.placeholder.com/150" }
-];
+
 
 app.get("/api/products", (req, res) => {
   res.json(products);
@@ -18,7 +14,8 @@ app.get("/api/products", (req, res) => {
 
 app.post("/api/order", (req, res) => {
   const { firstName, lastName, address, cart } = req.body;
-
+    console.log("placing order... ", { firstName, lastName, address, cart });
+    
   if (!firstName || !lastName || !address || !cart.length) {
     return res.status(400).json({ message: "All fields are required and cart cannot be empty." });
   }
